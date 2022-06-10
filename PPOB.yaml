@@ -1,0 +1,309 @@
+openapi: 3.1.0
+info:
+  version: 1.0
+  title: OpenAPI
+  
+
+servers:
+  - url: " "
+
+tags:
+  - name: Payment Point 
+    description: |
+      ---
+      ## Purpose of This Document
+      This document elaborates upon the specifications and process flows that are used by aggregator and its partners to 
+      make a service payment point.
+      <br>
+      ### Scope
+      This document covers for each product:
+        * Normal and Abnormal Transaction Flows
+        * Message Formats together with their respective samples
+  
+      The transaction flows in each product mainly revolve around the following functions:
+        * Inquiry
+        * Payment
+        * Advice or Reversal (subject to the product)
+      <br>
+      
+      ### Target Audiance
+      
+      This document is targeted for use by merchants/partners/clients acting as Collecting Agents.
+
+      ## Interface Requirements
+      ---
+      | Interface Requirements  |                                                                               |
+      | ------------------------|-------------------------------------------------------------------------------|
+      | Protocol                | HTTP/HTTPS (Recommended)                                                      |
+      | Data Exchange Type      | JSON                                                                          |
+      | Method                  | POST                                                                          |
+      | Inquiry URL             | https://xxx.xxx.xxx:xx/PPOBCa/webresources/inquiry (IP to be provided later)  |
+      | Payment URL             | https://xxx.xxx.xxx:xx/PPOBCa/webresources/payment (IP to be provided later)  |
+      | Advice URL              | https://xxx.xxx.xxx:xx/PPOBCa/webresources/advice (IP to be provided later)   |
+      | Reversal URL            | https://xxx.xxx.xxx:xx/PPOBCa/webresources/reversal (IP to be provided later) |
+      | Get Products URL        | https://xxx.xxx.xxx:xx/PPOBCa/webresources/reversal (IP to be provided later) |
+      | Get Products Detail URL | https://xxx.xxx.xxx:xx/PPOBCa/webresources/reversal (IP to be provided later) |
+      | Get Product Stock       | https://xxx.xxx.xxx:xx/PPOBCa/webresources/reversal (IP to be provided later) |
+      | Port                    | (To be provided later)                                                        |
+      | PartnerID               | (To be provided later)                                                        |
+      | Password                | (To be provided later)                                                        |
+
+      ## Transaction Flow
+      ---
+      ### Normal Transaction
+      Explanation:
+      <br>
+      Inquiry:
+      <br>
+      To make an inquiry, CA sends an Inquiry request message to aggregator, who in turn submits the message to Biller upon successfully authenticating its signature. Biller then responds with requested data (customer name, total amount, response code 00) to aggregator, who in turn passes the data to CA, if the inquiry is successful.  If failed, CA receives a response code other than 00.
+
+      Payment:
+      <br>
+      To make a payment, CA then sends a Payment request message (which includes requested data from the earlier Inquiry message) to aggregator, who in turn submits the message to Biller upon successfully authenticating its signature. Biller then responds with acknowledgement data (receipt code, response code 00) to aggregator, who in turn passes the data to CA, if the payment is successful. If failed, CA receives a response code other than 00.
+  
+paths:
+  /Inquiry:
+    post:
+      description: Inquiry
+      summary: Inquiry
+      tags: 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trxid:
+                  type: string
+                  example: DEV1019170918
+                  description: Transaction ID
+                trxdate:
+                  type: string
+                  example: 2020-10-19 17:09:18
+                  description: Transaction Date
+                  format: yyyy-MM-dd HH:mm:ss
+                partnerid:
+                  type: string
+                  example: SHP
+                  description: Partner ID
+                productid:
+                  type: string
+                  example: BPFI
+                  description: Product ID
+                customerid:
+                  type: string
+                  example: '0003721900053'
+                  description: Customer ID
+                extendInfo:
+                  type: string
+                  example: ""
+                  description: Other entry info apart from CustomerID if any.
+                trackingref:
+                  type: string
+                  example: '1019170918'
+                  description: Tracking Reference No
+                terminalid:
+                  type: string
+                  example: SHOPEE
+                  description: Terminal ID
+                signature:
+                  type: string
+                  example: 628a94fb75068f5c1a1175638d8a1c80ce1494a3
+                  description: Signature Hash Value
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  trxid:
+                    type: string
+                    example: DEV1019170918
+                    description: Transaction ID
+                  trxdate:
+                    type: string
+                    example: 2020-10-19 17:09:18
+                    description: Transaction Date
+                    format: yyyy-MM-dd HH:mm:ss
+                  partnerid:
+                    type: string
+                    example: SHP
+                    description: Partner ID
+                  productid:
+                    type: string
+                    example: BPFI
+                    description: Product ID
+                  customerid:
+                    type: string
+                    example: '0003721900053'
+                    description: Customer ID
+                  extendInfo:
+                    type: string
+                    example: ""
+                    description: Other entry info apart from CustomerID if any.
+                  customername:
+                    type: string
+                    example: FIRDAUS
+                    description: Customer Name
+                  totalamount:
+                    type: string
+                    example: '835000'
+                    description: Total Amount
+                  additionaldata_new:
+                    type: string
+                    example: "{\"id_pelanggan\":\"000372190053\",\"nama_pelanggan\":\"FIRDAUS\",\"biaya_admin\":\"15.000\",\"jumlah_tagihan\":\"800.000\",\"total_bayar\":\"835.000\",\"no_polis\":\"B 7373CYX\",\"tanggal_jatuh_tempo\":\"20190915\",\"biaya_denda\":\"20000\",\"angsuran_ke\":\"18\"}"
+                    description:  Mengacu ke tabel additional data pada bagian additional notes
+                  rc:
+                    type: string
+                    example: '00'
+                    description: Response Code
+                  rcdesc:
+                    type: string
+                    example: SUKSES
+                    description: Response Code Description
+                  trackingref:
+                    type: string
+                    example: '1019170918'
+                    description: Tracking Reference No
+                  terminalid:
+                    type: string
+                    example: SHOPEE
+                    description: Terminal ID
+                  signature:
+                    type: string
+                    example: 628a94fb75068f5c1a1175638d8a1c80ce1494a3
+                    description: Signature Hash Value
+          
+  /Payment:
+    post:
+      post:
+      description: Request and response payment
+      summary: Payment
+      tags: 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trxid:
+                  type: string
+                  example: DEV1019170918
+                  description: Transaction ID
+                trxdate:
+                  type: string
+                  example: 2020-10-19 17:09:18
+                  description: Transaction Date
+                  format: yyyy-MM-dd HH:mm:ss
+                partnerid:
+                  type: string
+                  example: SHP
+                  description: Partner ID
+                productid:
+                  type: string
+                  example: BPFI
+                  description: Product ID
+                customerid:
+                  type: string
+                  example: '0003721900053'
+                  description: Customer ID
+                extendInfo:
+                  type: string
+                  example: ""
+                  description: Other entry info apart from CustomerID if any.
+                totalamount:
+                  type: string
+                  example: '835000'
+                  description: Total amount  
+                trackingref:
+                  type: string
+                  example: '1019170918'
+                  description: Tracking Reference No
+                terminalid:
+                  type: string
+                  example: SHOPEE
+                  description: Terminal ID
+                signature:
+                  type: string
+                  example: c6f521d00ff593b31dd7fe28960bd6d54d6a4180                                     
+                  description: Signature Hash Value
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  trxid:
+                    type: string
+                    example: DEV1019170918
+                    description: Transaction ID
+                  trxdate:
+                    type: string
+                    example: 2020-10-19 17:09:18
+                    description: Transaction Date
+                    format: yyyy-MM-dd HH:mm:ss
+                  partnerid:
+                    type: string
+                    example: SHP
+                    description: Partner ID
+                  productid:
+                    type: string
+                    example: BPFI
+                    description: Product ID
+                  customerid:
+                    type: string
+                    example: '0003721900053'
+                    description: Customer ID
+                  extendInfo:
+                    type: string
+                    example: ""
+                    description: Other entry info apart from CustomerID if any.
+                  totalamount:
+                    type: string
+                    example: '835000'
+                    description: Total Amount
+                  receiptcode:
+                    type: string
+                    example: SHP000372190053161701
+                    description: Receipt code
+                  additionaldata_new:
+                    type: string
+                    example: "{\"id_pelanggan\":\"000372190053\",\"nama_pelanggan\":\"FIRDAUS\",\"biaya_admin\":\"15.000\",\"jumlah_tagihan\":\"800.000\",\"total_bayar\":\"835.000\",\"no_polis\":\"B 7373CYX\",\"tanggal_jatuh_tempo\":\"20190915\",\"biaya_denda\":\"20.000\",\"nama_produk\":\"Batavia Finance\",\"angsuran_ke\":\"18\",\"no_struk\":\"SHP000372190053161701\",\"tanggal_lunas\":\"2020-10-19 17:16:17\"}"
+                    description:  Mengacu ke tabel additional data pada bagian additional data
+                  rc:
+                    type: string
+                    example: '00'
+                    description: Response Code
+                  rcdesc:
+                    type: string
+                    example: SUKSES
+                    description: Response Code Description
+                  trackingref:
+                    type: string
+                    example: '1019170918'
+                    description: Tracking Reference No
+                  terminalid:
+                    type: string
+                    example: SHOPEE
+                    description: Terminal ID
+                  signature:
+                    type: string
+                    example: 71387435117fe784ad31e98d0e6fb978e4ef1f07
+                    description: Signature Hash Value
+  /Advice:
+    post:
+      responses:
+        '200':
+          description: OK
+  /Reversal:
+    post:
+      responses:  
+        description: OK        
+  /Get product:
+    post:
