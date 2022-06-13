@@ -294,3 +294,117 @@ paths:
                     type: string
                     example: 71387435117fe784ad31e98d0e6fb978e4ef1f07
                     description: Signature Hash Value
+
+  /Advice:
+    post:
+      description: Sample Advice Request Message
+      summary: Advice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trxid:
+                  type: string
+                  example: DEV0816160124
+                  description: Transaction ID 
+                trxdate: 
+                  type: string
+                  example: 2021-08-16 16:01:24
+                  description: Transaction Date
+                  format: yyyy-MM-dd HH:mm:ss
+                partnerid:
+                  type: string
+                  example: SHP
+                  description: Partner ID
+                productid:
+                  type: string
+                  example: MTF
+                  description: Product ID
+                customerid:
+                  type: string
+                  example: '9951701438'
+                  description: Customer ID
+                extendInfo:
+                  type: string
+                  example: ""
+                  description: Other entry info apart from CustomerID if any.
+                trackingref:
+                  type: string
+                  example: 'DN08161601240'
+                  description: Tracking Reference No
+                terminalid:
+                  type: string
+                  example: SHOPEE
+                  description: Terminal ID
+                signature:
+                  type: string
+                  example: 3022cd2727ab03d3989590b4a6516ef68dee99b0
+                  description: Signature Hash Value
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+               schema:
+                type: "object"
+                properties:
+                  trxid:
+                    type: string
+                    example: DEV0816160124
+                    description: Transaction ID
+                  trxdate:
+                    type: string
+                    example: 2021-08-16 16:01:43
+                    description: Transaction Date
+                    format: yyyy-MM-dd HH:mm:ss
+                  partnerid:
+                    type: string
+                    example: SHP
+                    description: Partner ID
+                  productid:
+                    type: string
+                    example: MTF
+                    description: Product ID
+                  customerid:
+                    type: string
+                    example: '9951701438s'
+                    description: Customer ID
+                  extendInfo:
+                    type: string
+                    example: ""
+                    description: Other entry info apart from CustomerID if any.
+                  totalamount:
+                    type: string
+                    example: '835000'
+                    description: Total Amount
+                  receiptcode:
+                    type: string
+                    example: SHP000372190053161701
+                    description: Receipt code
+                  additionaldata_new:
+                    type: string
+                    example: "{\"id_pelanggan\":\"000372190053\",\"nama_pelanggan\":\"FIRDAUS\",\"biaya_admin\":\"15.000\",\"jumlah_tagihan\":\"800.000\",\"total_bayar\":\"835.000\",\"no_polis\":\"B 7373CYX\",\"tanggal_jatuh_tempo\":\"20190915\",\"biaya_denda\":\"20.000\",\"nama_produk\":\"Batavia Finance\",\"angsuran_ke\":\"18\",\"no_struk\":\"SHP000372190053161701\",\"tanggal_lunas\":\"2020-10-19 17:16:17\"}"
+                    description:  Mengacu ke tabel additional data pada bagian additional data
+                  rc:
+                    type: string
+                    example: '00'
+                    description: Response Code
+                  rcdesc:
+                    type: string
+                    example: SUKSES
+                    description: Response Code Description
+                  trackingref:
+                    type: string
+                    example: '1019170918'
+                    description: Tracking Reference No
+                  terminalid:
+                    type: string
+                    example: SHOPEE
+                    description: Terminal ID
+                  signature:
+                    type: string
+                    example: 71387435117fe784ad31e98d0e6fb978e4ef1f07
+                    description: Signature Hash Value
