@@ -66,7 +66,7 @@ paths:
     post:
       description: Inquiry
       summary: Inquiry
-      tags: 
+      //tags: 
       requestBody:
         required: true
         content:
@@ -112,11 +112,11 @@ paths:
                   example: 628a94fb75068f5c1a1175638d8a1c80ce1494a3
                   description: Signature Hash Value
       responses:
-        "200":
+        200:
           description: "Success"
           content:
             application/json:
-              schema:
+               schema:
                 type: "object"
                 properties:
                   trxid:
@@ -179,10 +179,8 @@ paths:
           
   /Payment:
     post:
-      post:
       description: Request and response payment
       summary: Payment
-      tags: 
       requestBody:
         required: true
         content:
@@ -222,7 +220,7 @@ paths:
                 trackingref:
                   type: string
                   example: '1019170918'
-                  description: Tracking Reference No
+                  description: Tracking Reference Number  
                 terminalid:
                   type: string
                   example: SHOPEE
@@ -231,8 +229,9 @@ paths:
                   type: string
                   example: c6f521d00ff593b31dd7fe28960bd6d54d6a4180                                     
                   description: Signature Hash Value
+          
       responses:
-        "200":
+        200:
           description: "Success"
           content:
             application/json:
@@ -296,14 +295,3 @@ paths:
                     type: string
                     example: 71387435117fe784ad31e98d0e6fb978e4ef1f07
                     description: Signature Hash Value
-  /Advice:
-    post:
-      responses:
-        '200':
-          description: OK
-  /Reversal:
-    post:
-      responses:  
-        description: OK        
-  /Get product:
-    post:
