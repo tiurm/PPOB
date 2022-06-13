@@ -409,28 +409,22 @@ paths:
                     example: 71387435117fe784ad31e98d0e6fb978e4ef1f07
                     description: Signature Hash Value
       
-/Additonal Note:
-  put:
-    summary: Additional notes
-    description: |
-      ---
-      * All fields are case insensitive.
-      * Rows in the response table that are in gray indicate that the fields have the same values as those in the request table.
+  /Additonal Note:
+    put:
+      summary: Additional notes
+      description: |
+        ---
+        * All fields are case insensitive.
+        * Rows in the response table that are in gray indicate that the fields have the same values as those in the request table.
 
-      |     No   |                                                                                                                                                                  |
-      |----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-      |     A    | Alphanumeric                                                                                                                                                     | 
-      |     M    | Mandatory                                                                                                                                                        | 
-      |     O    | Optional                                                                                                                                                         |
-      |     C    | Conditional. A field that is Conditional is Mandatory in normal transactions (response code 00), and empty in abnormal transactions (response code other than 00)|
-      |     L    | List object                                                                                                                                                      |
+        | Explanation |                                                                                                                                                           |
+        |-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        |      A      | Alphanumeric                                                                                                                                                     | 
+        |      M      | Mandatory                                                                                                                                                        | 
+        |      O      | Optional                                                                                                                                                         |
+        |      C      | Conditional. A field that is Conditional is Mandatory in normal transactions (response code 00), and empty in abnormal transactions (response code other than 00)|
+        |      L      | List object                                                                                                                                                      |
 
-/Additonal Data:
-  put:
-    summary: Additional data
-    description: |
-      ---
-      
 
       
 
