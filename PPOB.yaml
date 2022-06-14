@@ -2,7 +2,6 @@ openapi: 3.1.0
 info:
   version: '1.0'
   title: OpenAPI
-  
 
 servers:
   - url: " "
@@ -424,7 +423,4 @@ paths:
         |      O      | Optional                                                                                                                                                         |
         |      C      | Conditional. A field that is Conditional is Mandatory in normal transactions (response code 00), and empty in abnormal transactions (response code other than 00)|
         |      L      | List object                                                                                                                                                      |
-
-
-      
-
+        
